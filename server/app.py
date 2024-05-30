@@ -8,11 +8,12 @@ from collections import Counter
 app = Flask(__name__)
 CORS(app)
 
-# Set up logging
+
 logging.basicConfig(level=logging.DEBUG)
 
-# Get the GitHub token from environment variables
-GITHUB_TOKEN = os.getenv('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')
+token = os.getenv('GITHUB_TOKEN')
+
+# GITHUB_TOKEN = os.getenv('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')
 HEADERS = {
     'Authorization': f'token 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'
 }
