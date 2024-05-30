@@ -2,8 +2,12 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import requests
 import logging
+from dotenv import load_dotenv
 import os
 from collections import Counter
+
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
