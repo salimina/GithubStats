@@ -6,22 +6,23 @@ from dotenv import load_dotenv
 import os
 from collections import Counter
 
-
-load_dotenv()
-
 app = Flask(__name__)
 CORS(app)
 
-
 logging.basicConfig(level=logging.DEBUG)
 
-GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-if not GITHUB_TOKEN:
-    raise ValueError("GITHUB_TOKEN is not set in environment variables")
+load_dotenv()
 
-HEADERS = {
-    'Authorization': f'token {GITHUB_TOKEN}'
+# Get the token from the environment variables
+token = os.getenv('GITHUB_TOKEN')
+
+# Now you can use the token
+url = 'https://api.github.com/user'
+headers = {
+    'Authorization': f'token {token}'
 }
+response = requests.get(url, headers=headers)
+
 @app.route('/api/user-stats/<username>', methods=['GET'])
 def get_user_stats(username):
     app.logger.debug(f'Request received for user: {username}')
@@ -38,7 +39,6 @@ def get_user_stats(username):
         repos = []
         page = 1
         total_forks = 0
-        total_stargazers = 0
         language_counter = Counter()
 
         while True:
