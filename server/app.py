@@ -11,13 +11,13 @@ CORS(app)
 
 logging.basicConfig(level=logging.DEBUG)
 
-token = os.getenv('GITHUB_TOKEN')
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
+if not GITHUB_TOKEN:
+    raise ValueError("GITHUB_TOKEN is not set in environment variables")
 
-# GITHUB_TOKEN = os.getenv('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')
 HEADERS = {
-    'Authorization': f'token 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'
+    'Authorization': f'token {GITHUB_TOKEN}'
 }
-
 @app.route('/api/user-stats/<username>', methods=['GET'])
 def get_user_stats(username):
     app.logger.debug(f'Request received for user: {username}')
